@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ExpenseManager</string>
+    <string name="cat_food">Food</string>
+    <string name="cat_grocery">Grocery</string>
+    <string name="cat_gas">Gas</string>
+    <string name="cat_other">Other</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="expense_amount">Enter Expense Amount</string>
+    <string name="total_expense_label">Total Expense</string>
+    <string name="total_expense">0</string>
 </resources>
