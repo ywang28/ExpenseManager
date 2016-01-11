@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Main activity to show "add expense" session and expense summary
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -14,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    /**
+     * Add expense entry
+     * @param view
+     */
     public void addExpense(View view) {
         TextView totalExpense = (TextView) findViewById(R.id.total_expense);
         EditText input = (EditText) findViewById(R.id.input);
