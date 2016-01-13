@@ -19,7 +19,6 @@ public class ExpenseContract {
      */
     public static abstract class ExpenseTable implements BaseColumns {
         public static final String TABLE_NAME = "expense";
-        public static final String COLUMN_NAME_ENTRY_ID = "entryid";
         public static final String COLUMN_NAME_CATEGORY = "category";
         public static final String COLUMN_NAME_AMOUNT = "amount";
         public static final String COLUMN_NAME_DATE = "date";
