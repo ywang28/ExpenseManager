@@ -11,6 +11,7 @@
     tools:context="com.myandroid.expensemanager.MainActivity">
 
     <RadioGroup
+        android:id="@+id/cat_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
