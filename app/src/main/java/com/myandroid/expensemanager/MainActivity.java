@@ -1,11 +1,10 @@
 package com.myandroid.expensemanager;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,18 +14,14 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
-
-import static com.myandroid.expensemanager.ExpenseContract.ExpenseTable;
 
 /**
  * Main activity to show "add expense" session and expense summary
@@ -195,11 +190,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String[] details = getExpenseDetails(position);
 
-        //if (getResources().getConfiguration().orientation == )
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("time", details[0]);
-        intent.putExtra("amount", details[1]);
-        intent.putExtra("category", details[2]);
-        startActivity(intent);
+        // start new activity in portrait mode
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra("time", details[0]);
+            intent.putExtra("amount", details[1]);
+            intent.putExtra("category", details[2]);
+            startActivity(intent);
+        }
+        // update fragment in landscape mode
+        else {
+            DetailFragment frag = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_fragment);
+            frag.setExpenseDetails(details[0], details[1], details[2]);
+        }
     }
 }
