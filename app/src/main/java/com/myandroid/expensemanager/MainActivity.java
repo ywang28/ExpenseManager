@@ -2,6 +2,7 @@ package com.myandroid.expensemanager;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,11 +27,11 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import static com.myandroid.expensemanager.ExpenseContract.ExpenseTable;
+
 /**
  * Main activity to show "add expense" session and expense summary
  */
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener {
-    private ListView expenseListView;
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
     private ArrayList<String> expenses;
     private String totalExpense;
     private ArrayAdapter<String> adapter;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        expenseListView = (ListView) findViewById(R.id.expense_list);
+        ListView expenseListView = (ListView) findViewById(R.id.expense_list);
         expenses = new ArrayList<>();
         totalExpense = "0";
 
@@ -61,18 +62,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // set up item long click listener
         // long click on an expense item will remove it
         expenseListView.setOnItemLongClickListener(this);
-    }
 
-    /**
-     * Load all expense from res raw file expenses.txt
-     */
-    private void readAllExpensesRaw() {
-        Scanner scan = new Scanner(getResources().openRawResource(R.raw.expenses));
-        while (scan.hasNextLine()) {
-            String line = scan.nextLine();
-            expenses.add(line);
-        }
-        scan.close();
+        // set up item click listener to show detail view
+        expenseListView.setOnItemClickListener(this);
     }
 
     /**
@@ -118,10 +110,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // find out date
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
 
-        // find out location
-        String location = "somewhere";
-
-        String expenseString = genExpenseString(currExpense, category, location, date);
+        String expenseString = genExpenseString(currExpense, category, date);
 
         expenses.add(expenseString);
         adapter.notifyDataSetChanged();
@@ -163,13 +152,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * Generate a string to show expense information
      * @param currExpense
      * @param category
-     * @param location
      * @param date
      * @return
      */
     private String genExpenseString(String currExpense,
                                     String category,
-                                    String location,
                                     String date) {
         return String.format("$%s on %s category at %s",
                 currExpense,
@@ -178,31 +165,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         );
     }
 
-    /**
-     * Add expense entry to database
-     * @param category
-     * @param expense
-     * @param date
-     * @param place
-     */
-    private void addExpenseToDB(String category, String expense, String date, String place) {
-        // start to set up database
-        ExpenseDbHelper dbHelper = new ExpenseDbHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    private String[] getExpenseDetails(int position) {
+        String[] expenseSplit = expenses.get(position).split(" ");
+        return new String[]{
+                "Time: " + expenseSplit[5] + " " + expenseSplit[6],
+                "Amount: " + expenseSplit[0],
+                "Category: " + expenseSplit[2]
+        };
 
-        ContentValues values = new ContentValues();
-        values.put(ExpenseTable.COLUMN_NAME_CATEGORY, category);
-        values.put(ExpenseTable.COLUMN_NAME_AMOUNT, expense);
-        values.put(ExpenseTable.COLUMN_NAME_DATE, date);
-        values.put(ExpenseTable.COLUMN_NAME_LOCATION, "places");
-
-        long newRowId;
-        newRowId = db.insert(
-                ExpenseTable.TABLE_NAME,
-                ExpenseTable.COLUMN_NAME_LOCATION,
-                values);
     }
-
     /**
      * Long click to remove the item
      * @param parent
@@ -218,5 +189,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         adapter.notifyDataSetChanged();
         updateTotalExpense("-" + currExpense);
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String[] details = getExpenseDetails(position);
+
+        //if (getResources().getConfiguration().orientation == )
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("time", details[0]);
+        intent.putExtra("amount", details[1]);
+        intent.putExtra("category", details[2]);
+        startActivity(intent);
     }
 }

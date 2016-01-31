@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:orientation="vertical"
+    tools:context="com.myandroid.expensemanager.DetailFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="50dp"
+        android:textSize="30dp"
+        android:layout_height="wrap_content"
+        android:text="@string/expense_details" />
+
+    <TextView
+        android:id="@+id/expense_date"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/expense_details" />
+
+    <TextView
+        android:id="@+id/expense_amount"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:padding="10dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/expense_details" />
+
+    <TextView
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:id="@+id/expense_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/expense_details" />
+
+</LinearLayout>

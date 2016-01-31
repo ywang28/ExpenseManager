@@ -8,4 +8,7 @@
     <string name="expense_amount">Enter Expense Amount</string>
     <string name="total_expense_label">Total Expense</string>
     <string name="total_expense">0</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="expense_details">Expense Details</string>
 </resources>
