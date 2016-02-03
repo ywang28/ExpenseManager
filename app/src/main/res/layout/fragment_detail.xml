@@ -16,31 +16,18 @@
         android:text="@string/expense_details" />
 
     <TextView
+        style="@style/detail_list_style"
         android:id="@+id/expense_date"
-        android:textSize="20dp"
-        android:padding="10dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/expense_details" />
 
     <TextView
+        style="@style/detail_list_style"
         android:id="@+id/expense_amount"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:padding="10dp"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/expense_details" />
 
     <TextView
-        android:padding="10dp"
-        android:textSize="20dp"
-        android:gravity="center"
+        style="@style/detail_list_style"
         android:id="@+id/expense_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/expense_details" />
 
 </LinearLayout>

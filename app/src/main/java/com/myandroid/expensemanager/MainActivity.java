@@ -1,6 +1,8 @@
 package com.myandroid.expensemanager;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -178,11 +180,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * @return true if item is successfully removed
      */
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        String currExpense = expenses.get(position).split(" ")[0].replace("$", "");
-        expenses.remove(position);
-        adapter.notifyDataSetChanged();
-        updateTotalExpense("-" + currExpense);
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.confirm_delete)
+                .setMessage(R.string.sure_to_delete_item)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String currExpense = expenses.get(position).split(" ")[0].replace("$", "");
+                        expenses.remove(position);
+                        adapter.notifyDataSetChanged();
+                        updateTotalExpense("-" + currExpense);
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+
         return true;
     }
 

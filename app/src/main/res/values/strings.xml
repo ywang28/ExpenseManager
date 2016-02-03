@@ -11,4 +11,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="expense_details">Expense Details</string>
+    <string name="confirm_delete">Confirm Delete</string>
+    <string name="sure_to_delete_item">Are you sure to delete this item</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
